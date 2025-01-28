@@ -1,0 +1,19 @@
+.carousel {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
+.form-step {
+  text-align: left;
+}
+
+.is-invalid {
+  border-color: red;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  color: #000;
+}

@@ -1,0 +1,61 @@
+<div class="container mt-5">
+  <h2>{{ title }}</h2>
+
+  <!-- Bootstrap Carousel -->
+  <div id="formCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div
+        class="carousel-item"
+        *ngFor="let step of steps; let i = index"
+        [class.active]="currentStep === i"
+      >
+        <div class="form-step">
+          <h3>{{ step.title }}</h3>
+          <form [formGroup]="step.formGroup">
+            <div *ngFor="let field of step.fields" class="mb-3">
+              <label [for]="field.formControlName" class="form-label">{{ field.label }}</label>
+              <input
+                [type]="field.type"
+                [id]="field.formControlName"
+                [formControlName]="field.formControlName"
+                class="form-control"
+                [ngClass]="{
+                  'is-invalid':
+                    step.formGroup.get(field.formControlName)?.invalid &&
+                    step.formGroup.get(field.formControlName)?.touched
+                }"
+              />
+              <div
+                *ngIf="step.formGroup.get(field.formControlName)?.invalid && step.formGroup.get(field.formControlName)?.touched"
+                class="text-danger"
+              >
+                This field is required.
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Controls -->
+    <button class="carousel-control-prev" type="button" (click)="previousStep()">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" (click)="nextStep()">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+
+  <!-- Submit Button -->
+  <div class="mt-4" *ngIf="currentStep === steps.length - 1">
+    <button
+      class="btn btn-success w-100"
+      (click)="submitForm()"
+      [disabled]="!steps[currentStep].formGroup.valid"
+    >
+      Submit
+    </button>
+  </div>
+</div>
